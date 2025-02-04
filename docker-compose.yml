@@ -1,0 +1,70 @@
+version: "3"
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:14.2-alpine
+    restart: always
+    ports:
+      - 5438:5432
+    environment:
+      - TZ=GMT+4
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=Ortholine
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    volumes:
+      - backups:/var/lib/pgbackups/data
+    links:
+      - postgres_db
+    depends_on:
+      - postgres_db
+    environment:
+      - TZ=GMT+4
+      - POSTGRES_HOST=postgres_db
+      - POSTGRES_PORT=5438
+      - POSTGRES_DB=Example
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+      - SCHEDULE=0 */7 * * *
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+      - HEALTHCHECK_PORT=8080
+
+  api:
+    image: employee-api:latest
+    container_name: employee-api
+    restart: always
+    links:
+      - postgres_db
+    depends_on:
+      - postgres_db
+    environment:
+      - ATTACHMENTS_PATH=/app/attachments
+      - DATABASE_TYPE=postgres
+      - DATABASE_HOST=postgres_db
+      - DATABASE_PORT=5438
+      - DATABASE_NAME=employee-managment
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=admin
+    ports:
+      - 3001:3001
+
+  redis-stack:
+    container_name: redis-stack
+    image: redis/redis-stack
+    restart: always
+    ports:
+      - "6379:6379"
+
+# volumes:
+#   db:
+#   backups:
