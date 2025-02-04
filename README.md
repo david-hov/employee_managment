@@ -57,6 +57,13 @@ PUT http://localhost:3001/v1/employees/XX
 - **Email Notification on Employee Creation**: Sends a welcome email asynchronously to newly created employees using a job queue.
 - **Redis Queue (Bull)**: Manages and triggers email notifications asynchronously through a Redis-backed queue.
 
+### Database Module with TypeORM
+
+- **Database Integration with TypeORM**: This module connects to a database (PostgreSQL) to persist employee data and other information.
+- **Employee Data Persistence**: Employee details such as name, job title, email and department are stored in the database and can be queried, updated, or deleted.
+- **TypeORM Entity**: The `Employee` entity is used to define the schema for the employee data and interact with the database.
+- **Database Connection**: A database connection is established during the application startup using TypeORM configuration (database credentials, host, etc.).
+
 ---
 
 ## Project Installation
