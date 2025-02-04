@@ -22,78 +22,92 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Employee Management System with Email Notifications
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a NestJS backend application that manages employee data and sends email notifications asynchronously using Redis job queues (Bull).
 
-## Project setup
+## Key Features
 
-```bash
-$ npm install
+### Employee Module
+- **Create Employee Endpoint**: Add new employees with basic details like name, job title, and department.
+```
+POST http://localhost:3001/v1/employees
+{
+    "name": "John",
+    "jobTitle": "Programmer",
+    "email": "reciever@gmail.com",
+    "department": "IT"
+}
 ```
 
-## Compile and run the project
+- **Read Employee Endpoint**: Retrieve employee details using their ID and list all employees.
+- **[Optional] Update Employee Endpoint**: Update an employee's job title and department.
+```
+PUT http://localhost:3001/v1/employees/XX
+{
+    "name": "Nick",
+    "jobTitle": "Programmer",
+    "email": "reciever@gmail.com",
+    "department": "IT"
+}
+```
+- **[Optional] Delete Employee Endpoint**: Remove an employee from the system.
 
-```bash
-# development
-$ npm run start
+### Email Service Module
+- **Email Notification on Employee Creation**: Sends a welcome email asynchronously to newly created employees using a job queue.
+- **Redis Queue (Bull)**: Manages and triggers email notifications asynchronously through a Redis-backed queue.
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
+## Project Installation
+
+Follow these steps to set up the project:
+
+1. Copy the example environment file and create your `.env`:
+
+   ```sh
+   cp .env.example .env
+2. Set env variables in .env file:
+    ```sh
+    // email
+    EMAIL_SERVICE=smtp.gmail.com
+    EMAIL_USER=email@gmail.com
+    EMAIL_PASSWORD=PASSWORD
+    
+    // db
+    DATABASE_TYPE=postgres
+    DATABASE_HOST=
+    DATABASE_PORT=
+    DATABASE_NAME=
+    DATABASE_USERNAME=
+    DATABASE_PASSWORD=
+    ```
+Install the dependencies:
+
+```sh
+npm i
+```
+Start the development server:
+
+```sh
+npm run start:dev
 ```
 
-## Run tests
+# Dockerfile and Docker Compose Environment Variables Setup
 
-```bash
-# unit tests
-$ npm run test
+In `docker-compose.yml`, ensure that the environment variables are set for use in your application:
 
-# e2e tests
-$ npm run test:e2e
+```Dockerfile
+// email
+EMAIL_SERVICE=smtp.gmail.com
+EMAIL_USER=email@gmail.com
+EMAIL_PASSWORD=PASSWORD
 
-# test coverage
-$ npm run test:cov
+// db
+DATABASE_TYPE=postgres
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_NAME=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
 ```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
