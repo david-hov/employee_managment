@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Delete, Param, Body, Logger, UsePipes, ValidationPipe, BadRequestException, InternalServerErrorException, HttpException, HttpCode } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Param, Body, Logger, BadRequestException, InternalServerErrorException, HttpException, HttpCode } from '@nestjs/common';
 
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './entities/create-employee.dto';
