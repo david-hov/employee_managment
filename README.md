@@ -68,6 +68,8 @@ PUT http://localhost:3001/v1/employees/XX
 
 ## Project Installation
 
+To ensure the correct Node.js version, this project uses an `.nvmrc` file. If you are using [nvm](https://github.com/nvm-sh/nvm) (Node Version Manager), you can run the following command to automatically use the appropriate version:
+
 Follow these steps to set up the project:
 
 1. Copy the example environment file and create your `.env`:
