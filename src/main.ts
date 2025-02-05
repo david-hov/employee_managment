@@ -10,7 +10,7 @@ async function bootstrap() {
     });
     app.setGlobalPrefix('v1')
     app.enableCors();
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
     app.use(bodyParser.json({ limit: '25mb' }));
     app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
     await app.listen(3001);

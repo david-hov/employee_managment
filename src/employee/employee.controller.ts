@@ -12,7 +12,6 @@ export class EmployeeController {
     ) { }
 
     @Post()
-    @UsePipes(new ValidationPipe())
     async create(@Body() employeeData: CreateEmployeeDto) {
         try {
             this.logger.log('Received employee data:', JSON.stringify(employeeData));
